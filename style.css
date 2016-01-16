@@ -49,3 +49,32 @@ button {
 h2 {
     text-align: center;
 }
+
+.timer{
+    margin: 3%;
+    text-align: center;
+}
+
+.column {
+    background-color: red;
+    width: 500px;
+    margin-left: 3%;
+    margin-right: 3%;
+
+    height: 500px;
+    display: inline-block;
+    border: solid black;
+    text-align: left;
+}
+
+#output{
+    position: relative;
+    top: -495px;
+}
+
+#input{
+    padding-left:0;
+    padding-top:0;
+    padding-right: 0.4em;
+    padding-bottom: 0.4em;
+}

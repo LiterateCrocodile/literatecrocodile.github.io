@@ -22,9 +22,16 @@
         </header>
         <h2>This is the game page, the page for the game</h2>
         <button class="startTimer">START TIMER</button>
-        <h3 class="timer"></h3>
+        <h4 class="timer"></h4>
+        <div class="column" id="output">HERES THE LEFT</div> <textarea class="column" id="input">HERES THE RIGHT</textarea>
         
         <script>
+            //makes input blank on click
+            $('#input').focus(
+				function(){
+					$(this).val('');
+			});
+            $('.column').hide();
             var seconds = 0;
             var minutes = 0;
             var addSecond = function() {
@@ -48,6 +55,7 @@
                 $('.timer').html(currentTime);
             }
             $('.startTimer').click(function() {
+                $('.column').show();
 				setInterval(addSecond, 1000);
 			});
         </script>
