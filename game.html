@@ -174,9 +174,9 @@
                 else{
                     evaluation = "You used " + counter + " prompts out of " + lenPrompts + " prompts. Good job!";
                 }
-                alert("eval");
+                //alert("eval");
                 $('#output').html("<h3>Your story will be about...</h3><strong>"+ masterPrompt + "</strong><h4><i>Incorporate these words as you go!</i></h4><i>"+allPromptsString+"</i><h1>"+evaluation+"</h1>");
-                $('#input').val(story);
+                $('#input').html(story);
             };
         </script>
     </body>
