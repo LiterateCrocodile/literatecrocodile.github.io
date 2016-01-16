@@ -42,6 +42,9 @@
         var ads = ["trustworthy", "loyal", "helpful", "friendly", "courteous", "kind", "obedient", "cheerful", "thrifty", "brave", "clean", "reverent", "haggard", "ruthlessly", "unending", "torrential", "comfortable", "nimble", "sloppily", "taciturn", "apocalyptic", "resigned", "patiently", "double", "protective", "hopeful", "sappy", "matronly", "vampiric", "justified", "memorable", "ironic", "spiderlike", "cunning", "devious", "misled", "societal", "brainwashed", "obedient", "dexterous", "robotic", "unpleasant", "addled", "peaceful", "capricious", "terminally", "surprising", "indigo", "aquatic", "royal", "uptight", "incompetent", "nurturing", "fated", "watchful", "pale", "ashen", "flushed", "beloved", "faithful", "pessimistic", "optimistic", "slowly", "quickly", "sporatically", "erratically", "bronze", "bubbly", "bulky", "bouyant", "corny", "crooked", "crowded", "clueless", "acidic", "evergreen", "exotic", "dangerous", "dapper", "deadly", "deafening", "flamoyant", "faraway", "feisty", "flimsy", "flashy", "humongous", "hefty", "heavy", "jagged", "jaded", "kooky", "infinite", "majestic", "magnificent", "noxious", "offensive", "orange", "prickly", "puny", "pesky", "quirky", "ragged", "rapidly", "rude", "regal", "shimmering", "sunny", "swift", "slippery", "starry", "thunderous", "thorny", "unconscious", "useless", "vacant", "vigilant", "victorious", "vivacious", "purple", "voluminous", "weak", "zany", "woozy", "boldly", "clumsily", "angrily", "arrogantly", "brutally", "bleakly", "cowardly", "daily", "darkly", "fiery", "frenetically", "hungrily", "haphazardly", "impatiently", "justly", "madly", "magically", "mightily", "noisily", "ominously", "painfully", "richly", "recklessly", "stealthily", "shrilly", "wickedly", "wisely"];
 
 
+        var totalSeconds = 0;
+        var totalMinutes = 0;
+
         // good here
         // strings that will store the words for the Master Prompt
         var masterNoun = "";
@@ -100,8 +103,7 @@
             // Makes columns initially hidden
             $('.column').hide();
             
-            var totalSeconds = 0;
-            var totalMinutes = 0;
+
             var currentTime = String;
             var addSecond = function() {
                 //Updates minutes and seconds

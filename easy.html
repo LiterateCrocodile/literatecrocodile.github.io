@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>	
+	
+	<head>
+		
+		<title>
+			Alligators May Be Better
+		</title>
+		
+		<link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+		<link rel="icon" href="http://s13.postimg.org/hh402rbxf/Crocodile_32.jpg">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link href='https://fonts.googleapis.com/css?family=Sigmar+One' rel='stylesheet' type='text/css'>
+        <script src="jquery.js"></script>
+        
+     </head>
+ 
+    <body>
+        
+        <header>
+            <h1 id = "HeadTitle">Literate Crocodile</h1> <img id = "HeadCroc" src="http://www.clker.com/cliparts/4/6/a/b/13177591361525636745Grinning%20Alligator.svg.hi.png">
+        </header>
+        <h2>This is the game page, the page for the game</h2>
+        <button class="startTimer">START</button>
+        <h4 class="timer"></h4>
+        <div class="column" id="output">Your prompts will appear here!</div> <textarea class="column" id="input">Type here!</textarea>
+        
+        <script>
+        
+        var verbs = ["chomp", "dine", "graze", "guzzle", "munch", "slurp", "ask", "beg", "plead", "question", "hiss", "snuffle", 
+        "squeal", "yell", "gasp", "huff", "sigh", "snap", "whisper", "bellow", "croak", "cry", "howl", "roar", "scream", "shout", "shriek", "boast",
+        "command", "instruct", "reply", "teach", "build", "craft", 	"create", "brew", "mix", "gel", "liquefy", "dig", "burrow",	"sink",	"climb", "mount",	
+        "scale", "crumple", "crush", "wreck", "close", "shut", "slam", "excite", "calm", "lull", "soothe", "enjoy", "hope",	"imagine", "listen", "aid",	"cherish", "prize",	"treasure", "adore",
+        "gaze",	"look",	"peek",	"peer",	"exit",	"leave", "halt", "quit", "chase", "follow", "obey", "pursue",
+        "float", "glide", "soar", "flow", "ooze", "sleep", "squabble", "race", "roll", "slide", "speed"];
+
+        var nouns = ["zebra","zephyr", "magician", "cat", "owl", "batman", "rice","war","wave","wax","wealth","weather","wheel","whip","whistle","wilderness","wind","wing","winter","wire","wood","wool","worm","wound","wren","wrench","wrist","vase","veil","vein","verse","vessel","vest","volcano","volleyball","voyage","quartz","queen","quicksand","quill","quilt","quiver","ice","icicle","ink","instrument","invention","island","jail","jellyfish","jewel","antithesis","conundrum","chemist", "crocodile", "alligators", "robin", "pillow", "bride", "goat", "earthquake", "bus", "fairy", "ewok", "letter", "cupcake", "puma", "computer science", "violin", "guitar", "giraffe", "sword", "alcohol", "mentor", "bacon", "rain", "actor", "milkshake", "internet", "racecar", "yeti", "kitten", "cardigan", "coffee", "spider", "poet", "archaeologist", "snow", "rose", "gondola", "canoe", "spear", "llama", "laser", "exorcism", "gnome", "captain", "mermaid", "throne", "revolution", "dragon", "zebra", "carrot", "vegetable", "crook", "theif", "ninja", "fool", "clown", "lamp", "magic", "science", "tax", "argument", "duel", "spy", "creature", "doctor", "screwdriver", "bat", "competition", "music", "parcel", "rod", "cape", "telescope", "teacup pig", "leash", "shame", "love", "harmony", "lion", "sister", "brother", "banner", "bat", "cottage", "recess", "knife", "temper", "fire", "maid", "picture", "monkey", "rope", "baggage", "locket", "cage", "scarecrow", "chocolate", "scarf", "actor", "gold","treasure", "chest", "chess", "meeting", "basketball", "pickle", "riddle", "bee", "ghost", "arrow", "gate", "art", "painting", "proposal", "jukebox", "journalist", "obstacle", "offense", "obliteration", "dolphin", "drone", "dystopia", "wolf", "wizard", "wildlife", "sculpture", "skeleton", "sobriety", "slob", "spell", "supernatural", "knight"];
+
+        var settings = ["Golden Gate Bridge", "Dark Alleyway", "Alligator Farm", "Picaso's Art Studio", "Lunar Colony", "Car Junkyard", "Scientific Lab", "Aquarium", "Barber Shop", "Baseball Stadium", "Basement", "Beauty Salon", "Tropical Beach", "Minotaur’s Lair", "Vampire Crypt", "Graveyard", "Half Price Bookstore", "Mountaintop Temple", "Log Cabin", "Bat Cave", "Flying Castle", "Casino", "Roadside Motel", "Circus", "Dumpster", "French Café", "Spa", "Vineyard", "College Dorm", "Hundred Story Skyscraper", "Olympic Stadium", "Pool Toy Factory", "The Titatnic", "Route 66", "Theme Park", "Insect Zoo", "Petting Zoo", "Toy Store", "Remote Lighthouse", "Jazz Club", "Two-man Canoe", "Airship", "Pirate Ship", "Movie Theater", "Pet Grooming Salon", "Ice Age", "Gym", "Diamond Mine", 
+        "Giant Spider Web", "The Pyramids", "A Meadow", "The Fire Swamp", "Trans-Continental Railroad", "Tree House", "Cruise Ship", "Alcatraz", "Pompeii", "Coral Reef", "Sahara Desert", "Mount Everest", "Underwater Cave", "The White House"];
+
+        var ads = ["trustworthy", "loyal", "helpful", "friendly", "courteous", "kind", "obedient", "cheerful", "thrifty", "brave", "clean", "reverent", "haggard", "ruthlessly", "unending", "torrential", "comfortable", "nimble", "sloppily", "taciturn", "apocalyptic", "resigned", "patiently", "double", "protective", "hopeful", "sappy", "matronly", "vampiric", "justified", "memorable", "ironic", "spiderlike", "cunning", "devious", "misled", "societal", "brainwashed", "obedient", "dexterous", "robotic", "unpleasant", "addled", "peaceful", "capricious", "terminally", "surprising", "indigo", "aquatic", "royal", "uptight", "incompetent", "nurturing", "fated", "watchful", "pale", "ashen", "flushed", "beloved", "faithful", "pessimistic", "optimistic", "slowly", "quickly", "sporatically", "erratically", "bronze", "bubbly", "bulky", "bouyant", "corny", "crooked", "crowded", "clueless", "acidic", "evergreen", "exotic", "dangerous", "dapper", "deadly", "deafening", "flamoyant", "faraway", "feisty", "flimsy", "flashy", "humongous", "hefty", "heavy", "jagged", "jaded", "kooky", "infinite", "majestic", "magnificent", "noxious", "offensive", "orange", "prickly", "puny", "pesky", "quirky", "ragged", "rapidly", "rude", "regal", "shimmering", "sunny", "swift", "slippery", "starry", "thunderous", "thorny", "unconscious", "useless", "vacant", "vigilant", "victorious", "vivacious", "purple", "voluminous", "weak", "zany", "woozy", "boldly", "clumsily", "angrily", "arrogantly", "brutally", "bleakly", "cowardly", "daily", "darkly", "fiery", "frenetically", "hungrily", "haphazardly", "impatiently", "justly", "madly", "magically", "mightily", "noisily", "ominously", "painfully", "richly", "recklessly", "stealthily", "shrilly", "wickedly", "wisely"];
+
+
+        var totalSeconds = 0;
+        var totalMinutes = 0;
+
+        // good here
+        // strings that will store the words for the Master Prompt
+        var masterNoun = "";
+        var masterVerb = "";
+        var masterSetting = "";
+        // good here
+        // organizes the part of speech arrays into a nice little data structure :)
+        var arrayDict = {0 : nouns, 1 : verbs, 2 : ads, 3 : settings};
+        
+        var allPrompts = [];
+        var allPromptsString = "";
+        var masterPrompt = ""
+        var chooseMasterPrompt = function()
+        {
+            // used to choose the master prompt at the beginning of the game
+            var masterNoun =  nouns[ Math.floor(Math.random() * nouns.length) ];
+            var masterVerb =  verbs[ Math.floor(Math.random() * verbs.length) ];
+            var masterSetting =  settings[ Math.floor(Math.random() * settings.length) ];
+            masterPrompt = masterNoun + ", " + masterVerb + ", " + masterSetting;
+            $('#output').html("<h3>Your story will be about...</h3><strong>"+masterPrompt+"</strong>");
+        };
+        
+        var firstSub = true;
+
+        var chooseSubPrompt = function()
+        {
+            // used to choose the subprompt that will appear every 30 seconds or so
+            var POS = Math.floor(Math.random() * 3 ) //picks part of speech of subprompt
+            var newPrompt = arrayDict[POS][Math.floor(Math.random() * arrayDict[POS].length)] //picks the word within the part of speech's array
+            allPrompts.push(newPrompt);
+            if(firstSub){
+                allPromptsString = newPrompt;
+                firstSub = false;
+                //alert("if "+allPromptsString);
+            }
+            else{
+                allPromptsString = allPromptsString + ", " + newPrompt;
+                //alert("else "+allPromptsString);
+            }
+            var htmlPrompts = "<h3>Your story will be about...</h3><strong>"+ masterPrompt + "</strong><h4><i>Incorporate these words as you go!</i></h4><i>"+allPromptsString+"</i>";
+            $('#output').html(htmlPrompts);
+        };
+        
+        
+       
+          
+            // Makes input blank on click
+            var starterText = true;
+            $('#input').focus(
+                function(){
+                    if(starterText){
+                        $(this).val('');
+                        starterText=false;
+                    }
+            });
+            // Makes columns initially hidden
+            $('.column').hide();
+            
+
+            var currentTime = String;
+            var addSecond = function() {
+                //Updates minutes and seconds
+                // < 59 because the execute MAKES IT 59 seconds
+                if(totalSeconds<59) {
+                    totalSeconds++;
+                }
+                // This should happen when there's 59 seconds on the clock
+                else {
+                    totalSeconds = 0;
+                    totalMinutes++;
+                }
+                // Makes it X:XX format
+                if(totalSeconds<10){
+                    currentTime = totalMinutes.toString() + ":0" + totalSeconds.toString();
+                }
+                else{
+                    currentTime = totalMinutes.toString() + ":" + totalSeconds.toString();
+                }
+                $('.timer').html(currentTime);
+            }
+            var addSecondID = 0;
+            var chooseSubID = 0;
+            var wordsPresentID = 0;
+            $('.startTimer').click(function() {
+                $('.startTimer').hide();
+                $('.column').show();
+                $('.timer').show();
+                chooseMasterPrompt();
+				addSecondID = setInterval(addSecond, 1000);
+                chooseSubID = setInterval(chooseSubPrompt, 20000);
+                wordsPresentID = setInterval(wordsPresent, 180000);
+			});
+            
+            // This string holds the story
+            var story = "";
+            var wordsPresent = function() //the input will be the string representing the entire story inputted the lefthand column
+            {
+                // Stop incrementing the timer
+                clearInterval(addSecondID);
+                
+                // Stop choosing more prompts
+                clearInterval(chooseSubID);
+                
+                // Don't call wordsPresent again
+                clearInterval(wordsPresentID);
+
+                // Stores story from input
+                story = document.getElementById("input").value;
+                var basement = story.toLowerCase()
+                $('.timer').hide();
+                // Takes in whole story and all prompts and returns number of prompts used
+                var counter = 0;
+                var lenPrompts = allPrompts.length;
+                for (i = 0; i <= lenPrompts; i++) { 
+                    //finds index of prompt in story
+                    var check = basement.indexOf(allPrompts[i])
+                    // if prompt was used in story, counter increments
+                    if (check >= 0) {
+                        counter++
+                    }
+                }
+                var evaluation = "";
+                
+                if (counter == 0){
+                    evaluation = "You failed because you didn't use any of the prompts. Sorry!";
+                }
+                else if (counter == 1){
+                    evaluation = "You used one prompt out of " + lenPrompts + " prompts. Nice Try!";
+                }
+                else{
+                    evaluation = "You used " + counter + " prompts out of " + lenPrompts + " prompts. Good job!";
+                }
+                //alert("eval");
+                $('#output').html("<h3>Your story will be about...</h3><strong>"+ masterPrompt + "</strong><h4><i>Incorporate these words as you go!</i></h4><i>"+allPromptsString+"</i><h1>"+evaluation+"</h1>");
+                $('#input').html(story);
+            };
+        </script>
+    </body>
+</html>
+
