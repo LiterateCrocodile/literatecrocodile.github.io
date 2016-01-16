@@ -40,8 +40,8 @@ p {
 button {
     text-align: center;
     width: 10%;
-    height: 50px;
     margin-left: 45%;
+    height: 50px;
     border-radius: 20px;
     background-color: #004705;
     color: ghostwhite;
@@ -99,4 +99,14 @@ a {
 
 a:hover { 
     color: #000090;
+}
+
+.diff{
+    display: inline-block;
+    width: 100px;
+    margin: 0 1% 0 1%;
+}
+
+#easy{
+    margin-left: 35%;
 }
