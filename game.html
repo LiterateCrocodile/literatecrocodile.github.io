@@ -88,11 +88,14 @@
        
           
             // Makes input blank on click
+            var starterText = true;
             $('#input').focus(
-				function(){
-					$(this).val('');
-			});
-            
+                function(){
+                    if(starterText){
+                        $(this).val('');
+                        starterText=false;
+                    }
+            });
             // Makes columns initially hidden
             $('.column').hide();
             
@@ -147,14 +150,14 @@
 
                 // Stores story from input
                 story = document.getElementById("input").value;
-                
+                var basement = story.toLowerCase()
                 $('.timer').hide();
                 // Takes in whole story and all prompts and returns number of prompts used
                 var counter = 0;
                 var lenPrompts = allPrompts.length;
                 for (i = 0; i <= lenPrompts; i++) { 
                     //finds index of prompt in story
-                    var check = story.indexOf(allPrompts[i])
+                    var check = basement.indexOf(allPrompts[i])
                     // if prompt was used in story, counter increments
                     if (check >= 0) {
                         counter++
@@ -171,8 +174,9 @@
                 else{
                     evaluation = "You used " + counter + " prompts out of " + lenPrompts + " prompts. Good job!";
                 }
-                $('#input').val(evaluation);
-                
+                alert("eval");
+                $('#output').html("<h3>Your story will be about...</h3><strong>"+ masterPrompt + "</strong><h4><i>Incorporate these words as you go!</i></h4><i>"+allPromptsString+"</i><h1>"+evaluation+"</h1>");
+                $('#input').val(story);
             };
         </script>
     </body>
