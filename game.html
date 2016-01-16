@@ -20,13 +20,12 @@
         <header>
             <h1 id = "HeadTitle">Literate Crocodile</h1> <img id = "HeadCroc" src="http://www.clker.com/cliparts/4/6/a/b/13177591361525636745Grinning%20Alligator.svg.hi.png">
         </header>
-        <h2>This is the game page, the page for the game</h2><h2 id="currPrompt">Prompt!</h2>
-        <button class="startTimer">START TIMER</button>
+        <h2>This is the game page, the page for the game</h2>
+        <button class="startTimer">START</button>
         <h4 class="timer"></h4>
-        <div class="column" id="output">Your story will appear here!</div> <textarea class="column" id="input">HERES THE RIGHT</textarea>
+        <div class="column" id="output">Your prompts will appear here!</div> <textarea class="column" id="input">Type here!</textarea>
         
         <script>
-        $('#currPrompt').hide();
         
         var verbs = ["chomp", "dine", "graze", "guzzle", "munch", "slurp", "ask", "beg", "plead", "question", "hiss", "snuffle", 
         "squeal", "yell", "gasp", "huff", "sigh", "snap", "whisper", "bellow", "croak", "cry", "howl", "roar", "scream", "shout", "shriek", "boast",
@@ -51,7 +50,9 @@
         // organizes the part of speech arrays into a nice little data structure :)
         var arrayDict = {0 : nouns, 1 : verbs, 2 : ads, 3 : settings};
         
-
+        var allPrompts = [];
+        var allPromptsString = "";
+        
         var chooseMasterPrompt = function()
         {
             // used to choose the master prompt at the beginning of the game
@@ -59,11 +60,12 @@
             var masterVerb =  verbs[ Math.floor(Math.random() * verbs.length) ];
             var masterSetting =  settings[ Math.floor(Math.random() * settings.length) ];
             var masterPrompt = masterNoun + ", " + masterVerb + ", " + masterSetting;
-            $('#currPrompt').html(masterPrompt);
+            $('#output').html(masterPrompt);
+            allPromptsString = masterPrompt;
         };
         
-        var allPrompts = [];
-        var allPromptsString = "";
+        var firstSub = true;
+
         var chooseSubPrompt = function()
         {
             
@@ -71,44 +73,17 @@
             var POS = Math.floor(Math.random() * 3 ) //picks part of speech of subprompt
             var newPrompt = arrayDict[POS][Math.floor(Math.random() * arrayDict[POS].length)] //picks the word within the part of speech's array
             allPrompts.push(newPrompt);
-            if(allPromptsString.length == 0){
-                allPromptsString = newPrompt;
+            if(firstSub){
+                allPromptsString = allPromptsString + "\n" + newPrompt;
+                firstSub = false;
             }
             else{
                 allPromptsString = allPromptsString + ", " + newPrompt;
             }
-            $('#currPrompt').html(allPromptsString);
+            $('#output').html(allPromptsString);
         };
         
-        var wordsPresent = function() //the input will be the string representing the entire story inputted the lefthand column
-        {
-            var finalPrompts = allPrompts;
-            $('.timer').hide();
-            // Takes in whole story and all prompts and returns number of prompts used
-            var counter = 0;
-            var lenPrompts = finalPrompts.length;
-            for (i = 0; i <= lenPrompts; i++) { 
-                //finds index of prompt in story
-                var check = story.indexOf(allPrompts[i])
-                // if prompt was used in story, counter increments
-                if (check >= 0) {
-                    counter++
-                }
-            }
-            var evaluation = "";
-            
-            if (counter == 0){
-                evaluation = "You failed because you didn't use any of the prompts. Sorry!";
-            }
-            else if (counter == 1){
-                evaluation = "You used one prompt out of " + lenPrompts + " prompts. Nice Try!";
-            }
-            else{
-                evaluation = "You used " + counter + "prompts out of " + lenPrompts + " prompts. Good job!";
-            }
-            $('#input').val(evaluation);
-            
-        };
+        
        
           
             // Makes input blank on click
@@ -136,42 +111,68 @@
                 }
                 // Makes it X:XX format
                 if(totalSeconds<10){
-                    var currentTime = totalMinutes.toString() + ":0" + totalSeconds.toString();
+                    currentTime = totalMinutes.toString() + ":0" + totalSeconds.toString();
                 }
                 else{
-                    var currentTime = totalMinutes.toString() + ":" + totalSeconds.toString();
+                    currentTime = totalMinutes.toString() + ":" + totalSeconds.toString();
                 }
                 $('.timer').html(currentTime);
             }
-            
+            var addSecondID = 0;
+            var chooseSubID = 0;
+            var wordsPresentID = 0;
             $('.startTimer').click(function() {
                 $('.startTimer').hide();
                 $('.column').show();
-                $('#currPrompt').show();
                 $('.timer').show();
                 chooseMasterPrompt();
-				setInterval(addSecond, 1000);
-               setInterval(chooseSubPrompt, 15000);
-                setInterval(wordsPresent, 180000);
+				addSecondID = setInterval(addSecond, 1000);
+                chooseSubID = setInterval(chooseSubPrompt, 15000);
+                wordsPresentID = setInterval(wordsPresent, 180000);
 			});
             
             // This string holds the story
             var story = "";
-            $(document).keypress(function(e) {
+            var wordsPresent = function() //the input will be the string representing the entire story inputted the lefthand column
+            {
+                // Stop incrementing the timer
+                clearInterval(addSecondID);
                 
-			if(e.which == 13) {
-                //alert("BUTTS");
-				story = story + document.getElementById("input").value+" ";
-                if(story!=" " && story!="  "){
-                    $('#output').html(story);
-				}
-                else{
-                    alert("Please type your sentence in the right field!");
+                // Stop choosing more prompts
+                clearInterval(chooseSubID);
+                
+                // Don't call wordsPresent again
+                clearInterval(wordsPresentID);
+
+                // Stores story from input
+                story = document.getElementById("input").value;
+                
+                $('.timer').hide();
+                // Takes in whole story and all prompts and returns number of prompts used
+                var counter = 0;
+                var lenPrompts = allPrompts.length;
+                for (i = 0; i <= lenPrompts; i++) { 
+                    //finds index of prompt in story
+                    var check = story.indexOf(allPrompts[i])
+                    // if prompt was used in story, counter increments
+                    if (check >= 0) {
+                        counter++
+                    }
                 }
-                $('#input').val('');
-            
-            }
-			});
+                var evaluation = "";
+                
+                if (counter == 0){
+                    evaluation = "You failed because you didn't use any of the prompts. Sorry!";
+                }
+                else if (counter == 1){
+                    evaluation = "You used one prompt out of " + lenPrompts + " prompts. Nice Try!";
+                }
+                else{
+                    evaluation = "You used " + counter + " prompts out of " + lenPrompts + " prompts. Good job!";
+                }
+                $('#input').val(evaluation);
+                
+            };
         </script>
     </body>
 </html>
