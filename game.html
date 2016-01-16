@@ -37,7 +37,7 @@
             
             var seconds = 0;
             var minutes = 0;
-            var currentTime = String
+            var currentTime = String;
             var addSecond = function() {
                 //Updates minutes and seconds
                 // < 59 because the execute MAKES IT 59 seconds
@@ -62,6 +62,16 @@
             $('.startTimer').click(function() {
                 $('.column').show();
 				setInterval(addSecond, 1000);
+			});
+            
+            // This string holds the story
+            var story = "";
+            $(document).keypress(function(e) {
+			if(e.which == 13) {
+                alert("BUTTS");
+				story = story + document.getElementById("input").value+" ";
+                $('#output').html(story);
+				}
 			});
         </script>
     </body>
