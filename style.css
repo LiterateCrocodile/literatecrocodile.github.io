@@ -96,3 +96,7 @@ footer{
 a {
     text-decoration: none;
 }
+
+a:hover { 
+    color: #000090;
+}
