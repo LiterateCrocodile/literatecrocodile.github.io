@@ -70,8 +70,10 @@
 			if(e.which == 13) {
                 alert("BUTTS");
 				story = story + document.getElementById("input").value+" ";
-                $('#output').html(story);
+                if(story!=" " && story!="  "){
+                    $('#output').html(story);
 				}
+            }
 			});
         </script>
     </body>
