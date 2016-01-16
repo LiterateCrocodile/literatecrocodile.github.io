@@ -23,17 +23,21 @@
         <h2>This is the game page, the page for the game</h2>
         <button class="startTimer">START TIMER</button>
         <h4 class="timer"></h4>
-        <div class="column" id="output">HERES THE LEFT</div> <textarea class="column" id="input">HERES THE RIGHT</textarea>
+        <div class="column" id="output">Your story will appear here!</div> <textarea class="column" id="input">HERES THE RIGHT</textarea>
         
         <script>
-            //makes input blank on click
+            // Makes input blank on click
             $('#input').focus(
 				function(){
 					$(this).val('');
 			});
+            
+            // Makes columns initially hidden
             $('.column').hide();
+            
             var seconds = 0;
             var minutes = 0;
+            var currentTime = String
             var addSecond = function() {
                 //Updates minutes and seconds
                 // < 59 because the execute MAKES IT 59 seconds
@@ -54,6 +58,7 @@
                 }
                 $('.timer').html(currentTime);
             }
+            
             $('.startTimer').click(function() {
                 $('.column').show();
 				setInterval(addSecond, 1000);
