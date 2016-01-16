@@ -29,16 +29,23 @@
             var minutes = 0;
             var addSecond = function() {
                 //Updates minutes and seconds
-                if(seconds<60) {
+                // < 59 because the execute MAKES IT 59 seconds
+                if(seconds<59) {
                     seconds++;
                 }
+                // This should happen when there's 59 seconds on the clock
                 else {
                     seconds = 0;
                     minutes++;
                 }
-                var currentTime = minutes.toString() + ":" + seconds.toString();
+                // Makes it X:XX format
+                if(seconds<10){
+                    var currentTime = minutes.toString() + ":0" + seconds.toString();
+                }
+                else{
+                    var currentTime = minutes.toString() + ":" + seconds.toString();
+                }
                 $('.timer').html(currentTime);
-                
             }
             $('.startTimer').click(function() {
 				setInterval(addSecond, 1000);
