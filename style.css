@@ -56,7 +56,7 @@ h2 {
 }
 
 .column {
-    background-color: red;
+    background-color: rgba(0, 255, 255, 0.15);
     width: 500px;
     margin-left: 3%;
     margin-right: 3%;
