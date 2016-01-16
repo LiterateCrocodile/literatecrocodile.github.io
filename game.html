@@ -52,35 +52,36 @@
         
         var allPrompts = [];
         var allPromptsString = "";
-        
+        var masterPrompt = ""
         var chooseMasterPrompt = function()
         {
             // used to choose the master prompt at the beginning of the game
             var masterNoun =  nouns[ Math.floor(Math.random() * nouns.length) ];
             var masterVerb =  verbs[ Math.floor(Math.random() * verbs.length) ];
             var masterSetting =  settings[ Math.floor(Math.random() * settings.length) ];
-            var masterPrompt = masterNoun + ", " + masterVerb + ", " + masterSetting;
-            $('#output').html(masterPrompt);
-            allPromptsString = masterPrompt;
+            masterPrompt = masterNoun + ", " + masterVerb + ", " + masterSetting;
+            $('#output').html("<h3>Your story will be about...</h3><strong>"+masterPrompt+"</strong>");
         };
         
         var firstSub = true;
 
         var chooseSubPrompt = function()
         {
-            
             // used to choose the subprompt that will appear every 30 seconds or so
             var POS = Math.floor(Math.random() * 3 ) //picks part of speech of subprompt
             var newPrompt = arrayDict[POS][Math.floor(Math.random() * arrayDict[POS].length)] //picks the word within the part of speech's array
             allPrompts.push(newPrompt);
             if(firstSub){
-                allPromptsString = allPromptsString + "\n" + newPrompt;
+                allPromptsString = newPrompt;
                 firstSub = false;
+                //alert("if "+allPromptsString);
             }
             else{
                 allPromptsString = allPromptsString + ", " + newPrompt;
+                //alert("else "+allPromptsString);
             }
-            $('#output').html(allPromptsString);
+            var htmlPrompts = "<h3>Your story will be about...</h3><strong>"+ masterPrompt + "</strong><h4><i>Incorporate these words as you go!</i></h4><i>"+allPromptsString+"</i>";
+            $('#output').html(htmlPrompts);
         };
         
         
