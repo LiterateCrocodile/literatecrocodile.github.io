@@ -35,26 +35,26 @@
             // Makes columns initially hidden
             $('.column').hide();
             
-            var seconds = 0;
-            var minutes = 0;
+            var totalSeconds = 0;
+            var totalMinutes = 0;
             var currentTime = String;
             var addSecond = function() {
                 //Updates minutes and seconds
                 // < 59 because the execute MAKES IT 59 seconds
-                if(seconds<59) {
-                    seconds++;
+                if(totalSeconds<59) {
+                    totalSeconds++;
                 }
                 // This should happen when there's 59 seconds on the clock
                 else {
-                    seconds = 0;
-                    minutes++;
+                    totalSeconds = 0;
+                    totalMinutes++;
                 }
                 // Makes it X:XX format
-                if(seconds<10){
-                    var currentTime = minutes.toString() + ":0" + seconds.toString();
+                if(totalSeconds<10){
+                    var currentTime = totalMinutes.toString() + ":0" + totalSeconds.toString();
                 }
                 else{
-                    var currentTime = minutes.toString() + ":" + seconds.toString();
+                    var currentTime = totalMinutes.toString() + ":" + totalSeconds.toString();
                 }
                 $('.timer').html(currentTime);
             }
@@ -67,12 +67,18 @@
             // This string holds the story
             var story = "";
             $(document).keypress(function(e) {
+                
 			if(e.which == 13) {
-                alert("BUTTS");
+                //alert("BUTTS");
 				story = story + document.getElementById("input").value+" ";
                 if(story!=" " && story!="  "){
                     $('#output').html(story);
 				}
+                else{
+                    alert("Please type your sentence in the right field!");
+                }
+                $('#input').val('');
+            
             }
 			});
         </script>

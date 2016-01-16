@@ -11,6 +11,7 @@ header {
     display: inline-block;
     background: #e0e3e3;
     border-radius: 10px;
+    padding: 5px 10px 0px 10px;
 }
 
 #HeadTitle {
@@ -42,7 +43,7 @@ button {
     height: 50px;
     margin-left: 45%;
     border-radius: 20px;
-    background-color: darkslategrey;
+    background-color: #004705;
     color: ghostwhite;
 }
 
