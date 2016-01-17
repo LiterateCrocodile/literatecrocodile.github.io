@@ -9,18 +9,13 @@ h1 {
 header {
     position: relative;
     display: inline-block;
-    background: #e0e3e3;
     border-radius: 10px;
     padding: 5px 10px 0px 10px;
 }
 
-#HeadTitle {
-    font-family: "Sigmar One";
-    display: inline-block;
-}
 
 #HeadCroc{
-    height: 50px;
+    height: 150px;
 }
 
 div {
