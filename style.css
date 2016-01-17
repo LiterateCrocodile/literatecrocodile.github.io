@@ -51,6 +51,8 @@ h2 {
     text-align: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 25px;
+    position: relative;
+    top: -10px;
 }
 
 .column {
@@ -66,13 +68,11 @@ h2 {
     font-size: 15px;
     border-radius: 2px;
     position: absolute;
-    top: 250px;
+    top: 300px;
 }
 
 #output{
     left: 4%;
-    position: absolute;
-    top: 250px;
 }
 
 #input{
@@ -104,4 +104,10 @@ a:hover {
 
 #easy{
     margin-left: 35%;
+}
+
+h3{
+    font-size: 22px;
+    position: relative;
+    top: -10px;
 }
