@@ -25,7 +25,7 @@
         <div class="column" id="output">Your prompts will appear here!</div> <textarea class="column" id="input">Type here!</textarea>
         
         <script>
-        
+        // Resources for prompts
         var verbs = ["chomp", "dine", "graze", "guzzle", "munch", "slurp", "ask", "beg", "plead", "question", "hiss", "snuffle", 
         "squeal", "yell", "gasp", "huff", "sigh", "snap", "whisper", "bellow", "croak", "cry", "howl", "roar", "scream", "shout", "shriek", "boast",
         "command", "instruct", "reply", "teach", "build", "craft", 	"create", "brew", "mix", "gel", "liquefy", "dig", "burrow",	"sink",	"climb", "mount",	
@@ -40,25 +40,28 @@
 
         var ads = ["trustworthy", "loyal", "helpful", "friendly", "courteous", "kind", "obedient", "cheerful", "thrifty", "brave", "clean", "reverent", "haggard", "ruthlessly", "unending", "torrential", "comfortable", "nimble", "sloppily", "taciturn", "apocalyptic", "resigned", "patiently", "double", "protective", "hopeful", "sappy", "matronly", "vampiric", "justified", "memorable", "ironic", "spiderlike", "cunning", "devious", "misled", "societal", "brainwashed", "obedient", "dexterous", "robotic", "unpleasant", "addled", "peaceful", "capricious", "terminally", "surprising", "indigo", "aquatic", "royal", "uptight", "incompetent", "nurturing", "fated", "watchful", "pale", "ashen", "flushed", "beloved", "faithful", "pessimistic", "optimistic", "slowly", "quickly", "sporatically", "erratically", "bronze", "bubbly", "bulky", "bouyant", "corny", "crooked", "crowded", "clueless", "acidic", "evergreen", "exotic", "dangerous", "dapper", "deadly", "deafening", "flamoyant", "faraway", "feisty", "flimsy", "flashy", "humongous", "hefty", "heavy", "jagged", "jaded", "kooky", "infinite", "majestic", "magnificent", "noxious", "offensive", "orange", "prickly", "puny", "pesky", "quirky", "ragged", "rapidly", "rude", "regal", "shimmering", "sunny", "swift", "slippery", "starry", "thunderous", "thorny", "unconscious", "useless", "vacant", "vigilant", "victorious", "vivacious", "purple", "voluminous", "weak", "zany", "woozy", "boldly", "clumsily", "angrily", "arrogantly", "brutally", "bleakly", "cowardly", "daily", "darkly", "fiery", "frenetically", "hungrily", "haphazardly", "impatiently", "justly", "madly", "magically", "mightily", "noisily", "ominously", "painfully", "richly", "recklessly", "stealthily", "shrilly", "wickedly", "wisely"];
 
-
+        // For use in timer
         var totalSeconds = 0;
         var totalMinutes = 0;
 
-        // good here
-        // strings that will store the words for the Master Prompt
+        // Strings that will store the words for the Master Prompt
         var masterNoun = "";
         var masterVerb = "";
         var masterSetting = "";
-        // good here
-        // organizes the part of speech arrays into a nice little data structure :)
+        
+        // Organizes the part of speech arrays into a nice little data structure :)
         var arrayDict = {0 : nouns, 1 : verbs, 2 : ads, 3 : settings};
         
+        // allPrompts will be a list of all the SECONDARY prompts generated
         var allPrompts = [];
+        // allPromptsString will be a string representation of all the SECONDARY
+        // prompts generated, with a ", " between them
         var allPromptsString = "";
+        
         var masterPrompt = ""
         var chooseMasterPrompt = function()
         {
-            // used to choose the master prompt at the beginning of the game
+            // Used to choose the master prompt at the beginning of the game
             var masterNoun =  nouns[ Math.floor(Math.random() * nouns.length) ];
             var masterVerb =  verbs[ Math.floor(Math.random() * verbs.length) ];
             var masterSetting =  settings[ Math.floor(Math.random() * settings.length) ];
@@ -66,80 +69,102 @@
             $('#output').html("<h3>Your story will be about...</h3><strong>"+masterPrompt+"</strong>");
         };
         
+        // Used to check if the prompt should have a ", " before it
         var firstSub = true;
 
+        // Used to choose the subprompt that will appear every 15 seconds or so
         var chooseSubPrompt = function()
         {
-            // used to choose the subprompt that will appear every 30 seconds or so
-            var POS = Math.floor(Math.random() * 3 ) //picks part of speech of subprompt
-            var newPrompt = arrayDict[POS][Math.floor(Math.random() * arrayDict[POS].length)] //picks the word within the part of speech's array
+            // Picks part of speech of subprompt
+            var POS = Math.floor(Math.random() * 3 )
+            // Picks the word within the part of speech's array
+            var newPrompt = arrayDict[POS][Math.floor(Math.random() * arrayDict[POS].length)]
+            // Important - this will be used to check usage at the end
             allPrompts.push(newPrompt);
+            
             if(firstSub){
                 allPromptsString = newPrompt;
                 firstSub = false;
-                //alert("if "+allPromptsString);
             }
+            
             else{
                 allPromptsString = allPromptsString + ", " + newPrompt;
-                //alert("else "+allPromptsString);
             }
+            
             var htmlPrompts = "<h3>Your story will be about...</h3><strong>"+ masterPrompt + "</strong><h4><i>Incorporate these words as you go!</i></h4><i>"+allPromptsString+"</i>";
             $('#output').html(htmlPrompts);
         };
         
-        
-       
-          
-            // Makes input blank on click
+            // Makes input blank on click the first time
+            // Used to check the first time
             var starterText = true;
+            
+            // When the user clicks on the textarea
             $('#input').focus(
                 function(){
+                    // If it's the first time they're clicking there
                     if(starterText){
+                        // Set the value of the text field to an empty string
                         $(this).val('');
                         starterText=false;
                     }
             });
+            
             // Makes columns initially hidden
             $('.column').hide();
             
-
-            var currentTime = String;
+            // This is used for the timer
+            var currentTime = '';
             var addSecond = function() {
-                //Updates minutes and seconds
+                
+                // Updates minutes and seconds
                 // < 59 because the execute MAKES IT 59 seconds
-                if(totalSeconds<59) {
+                if(totalSeconds < 59) {
                     totalSeconds++;
                 }
+                
                 // This should happen when there's 59 seconds on the clock
                 else {
                     totalSeconds = 0;
                     totalMinutes++;
                 }
+                
                 // Makes it X:XX format
                 if(totalSeconds<10){
                     currentTime = totalMinutes.toString() + ":0" + totalSeconds.toString();
                 }
+                
                 else{
                     currentTime = totalMinutes.toString() + ":" + totalSeconds.toString();
                 }
+                // Sets the timer to currentTime
                 $('.timer').html(currentTime);
             }
+            // End of addSecond
+            
+            // These are used to END the loops
             var addSecondID = 0;
             var chooseSubID = 0;
             var wordsPresentID = 0;
+            
+            // On button click, do:
             $('.startTimer').click(function() {
+                // Hide the button - IMPORTANT
                 $('.startTimer').hide();
                 $('.column').show();
                 $('.timer').show();
                 chooseMasterPrompt();
+                // Add a second every 1 sec
 				addSecondID = setInterval(addSecond, 1000);
+                // Add a subpromt every 10 sec
                 chooseSubID = setInterval(chooseSubPrompt, 10000);
+                // End the game every 3 min
                 wordsPresentID = setInterval(wordsPresent, 180000);
 			});
             
             // This string holds the story
             var story = "";
-            var wordsPresent = function() //the input will be the string representing the entire story inputted the lefthand column
+            var wordsPresent = function()
             {
                 // Stop incrementing the timer
                 clearInterval(addSecondID);
@@ -152,15 +177,16 @@
 
                 // Stores story from input
                 story = document.getElementById("input").value;
+                // Important for eval at the end
                 var basement = story.toLowerCase()
                 $('.timer').hide();
                 // Takes in whole story and all prompts and returns number of prompts used
                 var counter = 0;
                 var lenPrompts = allPrompts.length;
                 for (i = 0; i <= lenPrompts; i++) { 
-                    //finds index of prompt in story
+                    // Finds index of prompt in story
                     var check = basement.indexOf(allPrompts[i])
-                    // if prompt was used in story, counter increments
+                    // If prompt was used in story, counter increments
                     if (check >= 0) {
                         counter++
                     }
@@ -176,8 +202,8 @@
                 else{
                     evaluation = "You used " + counter + " prompts out of " + lenPrompts + " prompts. Good job!";
                 }
-                //alert("eval");
                 $('#output').html("<h3>Your story will be about...</h3><strong>"+ masterPrompt + "</strong><h4><i>Incorporate these words as you go!</i></h4><i>"+allPromptsString+"</i><h1>"+evaluation+"</h1>");
+                // Needed to keep the story there when the program is done
                 $('#input').html(story);
             };
         </script>
